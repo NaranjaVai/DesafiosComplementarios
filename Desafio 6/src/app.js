@@ -1,7 +1,6 @@
 const express = require("express");
 const session = require('express-session');
 const exphbs = require('express-handlebars')
-//const userRouter = require("./routes/user");
 const MongoStore = require('connect-mongo');
 const authRouter = require('./routes/auth');
 const app = express();
@@ -16,7 +15,7 @@ app.use('/auth', authRouter)
 const mongoStore = MongoStore.create({
     mongoUrl:'mongodb+srv://NaranjaVai:QwDRnfXylFfym8YT@clusternaranja.76pafxs.mongodb.net/ecommerce?retryWrites=true&w=majority',
     mongoOptions:{useNewUrlParser:true, useUnifiedTopology: true} ,
-    ttl: 30
+    ttl: 150
 })
 
 app.use(session({
@@ -26,11 +25,6 @@ app.use(session({
     saveUninitialized: false
 }))
 
-//app.use('/user', userRouter)
-
-app.get('/', (req,res) =>{
-    (req.session.user) ? res.send(`Welcome ${req.session} !!!`) : res.send('Welcome anonymous');
-})
 
 
 const PORT = process.env.PORT || 8080 ;
