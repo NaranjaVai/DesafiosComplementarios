@@ -1,12 +1,13 @@
+//document.getElementById('register').addEventListener('click', createRegister);
 
-function createRegister(){
+const  createRegister = async () => {
     const name = document.getElementById('nameClient').value;
     const apellido = document.getElementById('surNameClient').value;
     const pw = document.getElementById('password').value;
     const userMail = document.getElementById('emailClient').value;
     const edad = document.getElementById('ageClient').value;
-
-    fetch('/register',{
+    console.log('hola')
+    await fetch('/auth/register',{
         method: 'POST',
         headers:{'Content-Type': 'aplication/json'},
         body: JSON.stringify({name: name, surName: apellido, password: pw, userMail: userMail, age: edad })
@@ -15,4 +16,8 @@ function createRegister(){
     .catch(err => console.error(err));
 }
 
-document.getElementById('register').addEventListener('click', createRegister);
+document.getElementById("register").addEventListener("submit", (event) => {
+    event.preventDefault();
+    console.log("escucha evento")
+    createRegister();
+  });
