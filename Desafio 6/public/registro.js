@@ -6,9 +6,10 @@ const  createRegister = async () => {
     const pw = document.getElementById('password').value;
     const userMail = document.getElementById('emailClient').value;
     const edad = document.getElementById('ageClient').value;
-    console.log('hola')
-    await fetch('/auth/register',{
+    await fetch('http://localhost:8080/auth/register',{
         method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
         headers:{'Content-Type': 'aplication/json'},
         body: JSON.stringify({name: name, surName: apellido, password: pw, userMail: userMail, age: edad })
     })

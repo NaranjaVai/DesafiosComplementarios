@@ -14,4 +14,4 @@ const sendLogin = async () => {
     .catch(err => console.error(err));
 }
 
-document.getElementById('logIN').addEventListener('click', sendLogin);
+document.getElementById('logIN').addEventListener('submit', sendLogin);

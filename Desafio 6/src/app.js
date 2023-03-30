@@ -8,6 +8,8 @@ const authRouter = require('./routes/auth');
 const { initializePassport } = require("./config/passport.config");
 const app = express();
 
+app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'main.hbs'}))
+app.set('view engine', '.hbs');
 app.use(express.static('public'));
 app.use('/recursos', express.static(__dirname + '/public'));
 app.use(express.json());
@@ -16,8 +18,7 @@ app.use(express.urlencoded({extended:true}));
 initializePassport();
 
 app.use(passport.initialize());
-app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'main.hbs'}))
-app.set('view engine', '.hbs');
+
 
 const PORT = process.env.PORT || 8080 ;
 const server = app.listen(PORT , ()=>{

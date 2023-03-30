@@ -23,6 +23,7 @@ authRouter.post('/login', async (req,res)=>{
       res.render('login-error', {message:'Invalid Data'})}
       else{ 
         req.session.user = aux.emailClient;
+        aux = req.session.user
         //console.log('HOLAAAAAAAAA', req.session.user)
     res.render('data', { aux})}
 })
@@ -40,6 +41,7 @@ authRouter.get('/register', sessionValidation, (req,res) =>{
 
 authRouter.post('/register', sessionValidation, async (req,res) =>{
     const e_mail = req.body.userMail;
+    console.log(req.body);
     try{
         let user = await userModel.findOne({email : e_mail})
         if(user){
@@ -51,7 +53,7 @@ authRouter.post('/register', sessionValidation, async (req,res) =>{
             lastName : surname,
             age : age,
             email : e_mail,
-            password: createHash(password)
+            password: password
         }
         const userSaveModel = userModel(newUser)
         console.log(userSaveModel)
