@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const session = require('express-session');
 const exphbs = require('express-handlebars');
@@ -26,17 +27,17 @@ const server = app.listen(PORT , ()=>{
 }); 
 server.on('error', error => console.log(error)); 
 
-
+const MONGODB = process.env.MONGODB_URL;
 const mongoStore = MongoStore.create({
-    mongoUrl:'mongodb+srv://NaranjaVai:QwDRnfXylFfym8YT@clusternaranja.76pafxs.mongodb.net/ecommerce?retryWrites=true&w=majority',
+    mongoUrl: MONGODB,
     mongoOptions:{useNewUrlParser:true, useUnifiedTopology: true} ,
     ttl: 400
 })
 
-
+const sessionPw = process.env.SECRET_SESSION;
 app.use(session({
     store: mongoStore,
-    secret: 'secretSession',
+    secret: sessionPw,
     resave:false,
     saveUninitializSed: false
 }))

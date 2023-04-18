@@ -3,13 +3,12 @@ const userModel = require('../models/user');
 const {createHash, isValidPassword} = require('../utils/index');
 const Router = require('express')
 const {authMiddleware, sessionValidation} = require('../middlewares/index')
+require('dotenv').config();
 const authRouter = Router();
-
-mongoose.connect('mongodb+srv://NaranjaVai:QwDRnfXylFfym8YT@clusternaranja.76pafxs.mongodb.net/ecommerce?retryWrites=true&w=majority')
+MONGODB = process.env.MONGODB_URL;
+mongoose.connect(MONGODB)
         .then(res => console.log('DB connected'))
         .catch(err => console.log(err))
-
-
         
 authRouter.get('/login', sessionValidation, (req,res)=>{
     res.render('login', {})
