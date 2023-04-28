@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
-
+const userModel = require('../models/user')
+const userDto = require('./DTO/userDTO');
+const convertToDto = (object) => {
+    const { _id, user, email,password,rol,cartId } = object;
+    let aux = new userDto(_id, user, email,password, rol,cartId);
+    return aux
+}
 const MONGODB = process.env.MONGODB_URL;
 mongoose.connect(MONGODB, error => {
     if (error) {
@@ -8,31 +14,24 @@ mongoose.connect(MONGODB, error => {
     }
 });
 class UserDAO {
-    constructor(collection, schema) {
-        this.userCollection = mongoose.model(collection, schema);
-    }
-    
-    async createNewUser(user) {
-        const newUser = await this.userCollection.create({
-            ...user            
+        
+    async createNewUser(user, cid) {
+        const newUser = await userModel.create({
+            ...user,
+            cartId: cid            
         });
-        return newUser;
+        return convertToDto(newUser);
     }
     async findUser(user) {
-        let aux = await this.userCollection.findOne({ user: user.username });
-        return aux;
+        let aux = await userModel.findOne({ user: user.username });
+        return ((!aux) ? `User doesn't exist ${user}` : convertToDto(aux));
     }
 
-    async findUserByUsername(userName) {
-        let aux = await this.userCollection.findOne({ user: userName });
-        return aux;
+    async findUserByEmail(email) {
+        let aux = await userModel.findOne({ email: email }).lean();
+        return convertToDto(aux);
     }
 
-    async findIdUser(id) {
-        let aux = await this.userCollection.findOne({ _id: id });
-        if (!aux) return { Error: "User not Found" };
-        return aux;
-    }
 }
 
 module.exports = UserDAO;
