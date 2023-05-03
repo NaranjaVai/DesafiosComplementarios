@@ -1,25 +1,25 @@
-const UserDAO = require('../daos/userDao.js')
-const userSchema = require('../models/user.js')
-const userDAO = new UserDAO('users', userSchema)
+const UserRepository = require('../repository/userRepository')
+const userRepository = new UserRepository();
 
-const createUser = async (user) => {    
-    const aux = await userDAO.createNewUser(user)
+const createUser = async (user) => {
+    const newCartUser = await createUser();    
+    const aux = await userRepository.createUserRepository(user, newCartUser._id)
     return aux
 }
 
 const userLogin = async (user) => {
-    const userMongoDb = await userDAO.findUser(user);
-    return userMongoDb;
+    const aux = await userRepository.findUserRepository(user);
+    return aux;
 };
 
 const getUserByIdService = async (id) => {
-    const userID = await userDAO.findIdUser(id);
+    const userID = await userRepository.findUserByIdRepository(id);
     return userID
 }
 
-const getUserByUsername= async (nameUser) => {
-    const aux = await userDAO.findUserByUsername(nameUser)
+const getEmail = async (userEmail) => {
+    const aux = await userRepository.getUserByEmailRepository(userEmail)
     return aux
-}
+};
 
-module.exports = { createUser, userLogin, getUserByIdService , getUserByUsername}
+module.exports = { createUser, userLogin, getUserByIdService , getEmail}

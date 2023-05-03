@@ -8,16 +8,23 @@ class CartRepository {
         return aux;
     };
 
-    getCartRepository = async (e) => {
-        const aux = await cart.getCarts(e);
+    getCartByRepository = async (id) => {
+        const aux = await cart.getCart();
         return aux;
     };
 
-    getProductsInCartRepository = async (email) => {
-        const aux = await cart.getProductsInCart(email);
+    getProductsInCartRepository = async (id) => {
+        const aux = await cart.getProductsInCart(id);
         return aux;
     }
-
+    addProductRepository = async (cid,pid) =>{
+        const aux = await cart.addProductCart(cid,pid);
+        return aux;
+    }
+    deleteProductRepository = async(cid, pid) =>{
+        const aux = await cart.removeProductCart(cid, pid);
+        return aux;
+    }
 }
 
 module.exports = CartRepository

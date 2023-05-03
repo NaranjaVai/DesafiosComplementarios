@@ -1,17 +1,26 @@
-const authMiddleware = (req,res,next) =>{
-    if(req.session.user){
-     return next()
+const {getEmail} = require('../services/userService')
+
+const adminValidation = async (req,res,next) =>{
+    const aux = await getEmail(req.session?.email);
+    if(aux?.rol === 'admin'){
+        return next();
     }else{
-        res.render('login', {status: 'failed'})
+        res.render('login', {status: '400', 'mesagge:': 'Only Admin Allowed'})
     }
 }
 
-const sessionValidation = (req,res,next) =>{
-    if(!req.session?.user){
-        return next()
+const userValidation = async (req,res,next) =>{
+    const aux = await getEmail(req.session?.email)
+    if(aux?.rol === 'usuario'){
+        return next();
     }else{
-        res.render('data', {})
+        res.send({ "mesagge" : "You're Not Authorized" })
     }
 }
 
-module.exports = { sessionValidation, authMiddleware }
+const logValidation = async (req,res,next) =>{
+    const aux = await getEmail(req.session?.user?.email)
+    (aux) ? next() : res.redirect('/login')
+}
+
+module.exports = { userValidation, adminValidation, logValidation}

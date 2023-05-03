@@ -1,11 +1,9 @@
-const { getCarts, createCarts, addProductToCart, productIn } = require("../services/cartsService.js");
+const {getCartById, createCarts, addProductToCart, productInCart,deleteProduct } = require("../services/cartsService.js");
 
 
 const getCart = async (req, res) => {
-    let carts = await getCarts()
-    console.log(carts)
-    
-    res.send(carts)
+    let cart = await getCarts()
+    res.send(cart)
 };
 
 const createCart = async (req, res) => {
@@ -13,15 +11,20 @@ const createCart = async (req, res) => {
     res.send(AddCart)
 };
 
+const productInCart = async (req, res) => {
+    let proInCart = await productInCartService(req.params.cid)
+    console.log(proInCart)
+    res.render('cartHome', { title: "Cart", proInCart })
+};
+
 const addProductCart = async (req, res) => {
     let addProduct = await addProductToCart(req.params.cid, req.params.pid)
-    res.send(addProduct)
+    res.send({status: 'success', payload: 'added successfully'  },addProduct)
 };
 
-const productInCart = async (req, res) => {
-    let proInCart = await productIn(req.params.cid)
-    console.log(proInCart)
-    res.render('cartHome', { title: "Carrito", proInCart })
-};
+const deleteProductCart = async (req,res) => {
+    const aux = await deleteProduct(req.params.cid, req.params.pid)
+    res.send(aux)
+}
 
-module.exports = { getCart, createCart, addProductCart, productInCart };
+module.exports = { getCart, createCart, addProductCart, productInCart ,deleteProductCart};

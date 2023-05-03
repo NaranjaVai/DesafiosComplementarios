@@ -10,7 +10,7 @@ mongoose.connect(MONGODB, error => {
     }
 });
 
-const toDTO = (cart) => {
+const convertToDTO = (cart) => {
     const products = cart.products.map(p =>{
         return{
             _id: p.product._id,
@@ -34,11 +34,11 @@ class CartDao {
         }
     }
 
-    async getItemsInCart() {
+    async getCart() {
         try {
-            const cart = await CartModel.findOne({ _id: id })
-            return cart.products
-        }
+        let aux = await CartModel.find().lean()
+        return aux
+        }       
         catch (err) {
             console.log(err)
         }
@@ -49,7 +49,7 @@ class CartDao {
             const existCart = await CartModel.findOne({ _id: cartId }).lean()
                     .populate("products.product")
             if(!existCart){
-                return `no existe un carrito con el id: ${cartId}` }
+                return `Cart with id: ${cartId} not found` }
             const aux = existCart.products
             return aux
             
@@ -61,22 +61,34 @@ class CartDao {
     async addProductCart(id, proId) {
         try {
             const existCart = await CartModel.findOne({ _id: id })
-            if (existCart) {
-                if (!(idProduct = await productDAO.getProductById({_id:proId}))){
-                    return `this product id ${proId} doesn't exist`}
-            }else{ return `Cart doesn't exist with this ID : ${id}`}
-
+            if (existCart) {return `Cart doesn't exist with this ID : ${id}`}
             const iNext = existCart.products.findIndex(e => String(e.product) === proId)
             const newProduct = {product: proId}
             (iNext >= 0) ? existCart.products[iNext].quantity += 1 : (existCart.products.push(newProduct));
             const cart = await existCart.save()
-            return cart.products
+            const aux = convertToDTO(cart)
+            return aux.products
         }
         catch (err) {
             console.log(err)
         }
     }
+    async removeProductCart(id, pid){
+        try{
+            const cart = CartModel.findOne({_id:id})
+            if (!cart) {return { error: `Cart doesn't exist with this id: ${id}` };}
+            const itemIndex = cart.products.findIndex(p => String(p.product === pid))
+            if (itemIndex < 0 ){
+                return {error : `Product with ID: ${pid} not found `}
+            }
+            cart.products.splice(itemIndex, 1);
+            const newCart = await cart.save();
+            const aux = convertToDTO(newCart)
+            return aux.products;
+        }catch{
 
+        }
+    }
 }
 
 module.exports = CartDao

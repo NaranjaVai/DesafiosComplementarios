@@ -13,10 +13,15 @@ class UserRepository {
         return user;
     }
 
-    findUserRRepository = async (user) => {
+    findUserRepository = async (user) => {
         const userInDB = await user.findUser(user);
         return userInDB;
     };
+    findUserByIdRepository = async (id) => {
+        const userInDB = await user.findUserById(id);
+        return userInDB;
+    };
+    
 }
 
 module.exports = UserRepository

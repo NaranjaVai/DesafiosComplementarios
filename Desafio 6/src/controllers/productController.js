@@ -1,9 +1,9 @@
-const { getProduct, createProduct, getProductById } = require('../services/productService');
+const { getProduct, createProduct, getProductById,updateProduct,deleteProduct } = require('../services/productService');
 
 const getProducts = async (req, res) => {
-    const limit = req.query.limit || 3;
-    const page = req.query.page || 1;       
-    let result = await getProduct(limit, page);    
+    const limit = req.query.limit || 5;
+    const pages = req.query.page || 1;       
+    let result = await getProduct(limit, pages);    
     let user = req.session.user || "You're not logged" 
     
     res.render('productsHBS' ,{title: "Productos", result, user});
@@ -17,8 +17,20 @@ const getPById = async (req , res) => {
 };
 
 const addProduct= (req, res) => {
-    let response = createProduct(req.body);
-    res.send(response);
+    let aux = createProduct(req.body);
+    res.send(aux);
 };
 
-module.exports = { getProducts , addProduct , getPById};
+const updateProducts = async (req,res) =>{
+    const pid = req.params.pid;
+    const body = req.body;
+    const update = await updateProduct(pid,body);
+    res.send(update);
+}
+
+const removeProduct = async (req,res) =>{
+    const pid = req.params.pid;
+    const remove = await deleteProduct(pid);
+    res.send(remove)
+}
+module.exports = { getProducts , addProduct , getPById,updateProducts,removeProduct};

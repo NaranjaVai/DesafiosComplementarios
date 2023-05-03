@@ -1,21 +1,30 @@
-const ProductsDAO = require("../daos/productDao");
-const productSchema = require("../models/product");
+const productRepository = require('../repository/productRepository');
+const repoProduct = new productRepository();
 
-const productDAO = new ProductsDAO('products', productSchema)
 
-const getProduct = async (limit , page ) => {
-    let aux = await productDAO.getProducts(limit , page )
+const getProduct = async (limit, page ) => {
+    let aux = await repoProduct.getProductRepository(limit, page )
     return aux
 }
 
 const getProductById = async (id) => {
-    let aux = productDAO.getProductById(id)
+    let aux = repoProduct.getProductByIdRepository(id)
     return aux
 }
 
-const createProduct = (product) => {
-    let aux =  productDAO.createProduct(product)
+const createProduct = async (product) => {
+    let aux =  repoProduct.createProductRepository(product)
     return aux
 }
 
-module.exports = { getProduct, createProduct, getProductById };
+const updateProduct = async (pid, update) => {
+    let aux = repoProduct.updateProductIdRepository(pid,update)
+    return aux;
+}
+
+const deleteProduct = async (id) => {
+    let aux = repoProduct.deleteProductByIdRepository(id);
+    return aux;
+}
+
+module.exports = { getProduct, createProduct, getProductById,updateProduct,deleteProduct };

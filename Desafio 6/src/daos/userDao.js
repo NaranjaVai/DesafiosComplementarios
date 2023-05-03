@@ -23,13 +23,17 @@ class UserDAO {
         return convertToDto(newUser);
     }
     async findUser(user) {
-        let aux = await userModel.findOne({ user: user.username });
+        let aux = await userModel.findOne({ user: user.username }).lean();
         return ((!aux) ? `User doesn't exist ${user}` : convertToDto(aux));
     }
 
     async findUserByEmail(email) {
         let aux = await userModel.findOne({ email: email }).lean();
         return convertToDto(aux);
+    }
+    async findUserById(id) {
+        const aux = await userModel.findOne({ _id: id }).lean();
+        return convertToDto(aux)
     }
 
 }
