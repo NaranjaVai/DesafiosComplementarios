@@ -9,7 +9,7 @@
     <h3>Categoria: {{result.category}} </h3>
     <h3>Precio: ${{result.price}} </h3>
     <h3>Stock: {{result.stock}} </h3>
-    <button  onclick="addCartProduct('{{user.idCart}}','{{result._id}}')">Add to Cart</button>
+    <button  onclick="addProduct('{{user.idCart}}','{{result._id}}')">Add to Cart</button>
     
     <div>
     
@@ -19,4 +19,4 @@
 
     </div>
 
-<script src="/js/addCartProduct.js"></script>
+<script src="/addProduct.js"></script>
