@@ -5,14 +5,12 @@ const exphbs = require('express-handlebars');
 const passport = require('passport');
 const {Server} = require('socket.io');
 const MongoStore = require('connect-mongo');
-const sessionsRouter = require('./routes/sessions')
-const authRouter = require('./routes/auth');
 const { initializePassport } = require("./config/passport.config");
 const app = express();
-const userRouter = require('./routes/userRouter.js');
-const productRouter = require('./routes/productRouter.js');
-const cartRouter = require('./routes/cartRouter.js');
-const messageRouter = require('./routes/messageRourter.js');
+const userRouter = require('./routes/userRouter');
+const productRouter = require('./routes/productRouter');
+const cartRouter = require('./routes/cartRouter');
+const messageRouter = require('./routes/messageRouter')
 
 app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'main.hbs'}))
 app.set('view engine', 'hbs');
@@ -20,10 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use('/recursos', express.static(__dirname + '/public'));
-
-
-
-
 
 const MONGODB = process.env.MONGODB_URL;
 const mongoStore = MongoStore.create({
@@ -49,8 +43,6 @@ app.use("/api/messages", messageRouter);
 
 initializePassport();
 app.use(passport.initialize());
-
-
 
 
 const PORT = process.env.PORT || 8080 ;

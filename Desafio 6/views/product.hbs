@@ -1,0 +1,35 @@
+{{#if user}}
+        <h3>User: {{user.user}}</h3>
+{{else}}
+{{/if}}
+
+<h1>Product:</h1>
+
+{{#each result.docs }}    
+       <h3>Name: {{title}}</h3>
+       <h4>Categoria: {{category}}</h4>
+       <h4>Descripcion: {{description}}</h4>
+       <h4>Stock: {{stock}}</h4>
+       <h4>Precio: $ {{price}}</h4>
+       <a href="/api/products/{{_id}}">Go to Product</a>         
+
+{{/each}}
+
+<button onclick="location.href = '/api/carts/{{user.idCart}}'">Go Cart</button>
+
+<div>
+    {{#if result.hasPrevPage}}
+        <a href={{result.prevLink}}>Previous</a>
+    {{/if}}
+    
+     {{#if result.hasNextPage}}
+        <a href={{result.nextLink}}>Next</a>
+    {{/if}} 
+
+    &nbsp;
+    <p>Actual: {{result.page}}</p>
+    &nbsp;
+</div>
+ 
+
+

@@ -14,9 +14,10 @@ const postUserLogin = async (req, res) => {
             req.session.email = loginUser.email
             req.session.rol = loginUser.rol;
             req.session.idCart = loginUser.idCart
-            res.send({ status: "Ok" });
+            let aux = req.session.user;
+            res.render('data',{aux});
         } else {
-            res.send({ status: "Something went wrong!" })
+            res.send('login-error',{});
         }        
     } catch (e){
         res.status(500).send("hubo un error!")

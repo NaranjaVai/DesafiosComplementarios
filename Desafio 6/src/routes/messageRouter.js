@@ -3,7 +3,7 @@ const messageRouter = Router();
 
 messageRouter.get('/', (req,res)=>{
     
-    res.render('messagesHBS' ,{title: "chat", })
+    res.render('message' ,{title: "chat", })
 });
 
 

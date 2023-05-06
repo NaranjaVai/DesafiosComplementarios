@@ -6,14 +6,14 @@ const getProducts = async (req, res) => {
     let result = await getProduct(limit, pages);    
     let user = req.session.user || "You're not logged" 
     
-    res.render('productsHBS' ,{title: "Productos", result, user});
+    res.render('product' ,{title: "Products", result, user});
 };    
 
 const getPById = async (req , res) => {
     const pid = req.params.pid
     let user = req.session.user || "You're not logged" 
     let result = await getProductById(pid)
-    res.render('productIDHBS' , {title: "Producto por ID", result , user});
+    res.render('idProduct' , {title: "Producto por ID", result , user});
 };
 
 const addProduct= (req, res) => {

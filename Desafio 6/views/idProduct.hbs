@@ -1,0 +1,22 @@
+{{#if user}}
+        <h3>User: {{user.user}}</h3>
+        <h3>Rol: {{user.rol}}</h3>   
+        <h3>CarT ID: {{user.idCart}}</h3>    
+{{else}}
+{{/if}}
+    <h2>Title " {{result.title}} "  </h2>
+    <h3>Descripcion: {{result.description}} </h3>
+    <h3>Categoria: {{result.category}} </h3>
+    <h3>Precio: ${{result.price}} </h3>
+    <h3>Stock: {{result.stock}} </h3>
+    <button  onclick="addCartProduct('{{user.idCart}}','{{result._id}}')">Add to Cart</button>
+    
+    <div>
+    
+        <a class="" href="http://localhost:8080/api/products">All the Products</a>
+    
+        <button onclick="location.href = '/api/carts/{{user.idCart}}'">Go Cart</button>
+
+    </div>
+
+<script src="/js/addCartProduct.js"></script>
