@@ -1,7 +1,31 @@
 import {faker} from '@faker-js/faker';
 faker.locale = 'es';
 
-const generarUsuarios = (cant) =>{
+
+const generarProductos = (cant) => {
+    const products = [];
+    for(let i=0; i<cant; i++){
+        products.push(generarProducto())
+    }
+}
+
+const generarProducto = () =>{
+    return{
+        id: faker.database.mongodbObjectId(),
+        name: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        price: faker.commerce.price(),
+        image: faker.image.imageUrl(),
+        category: faker.commerce.productMaterial()
+        
+    }
+}
+
+export {generarProductos}
+
+
+
+/* const generarUsuarios = (cant) =>{
     const users = [];
     for(let i =0; i< cant; i++){
         users.push(generarUsuario())
@@ -17,21 +41,4 @@ const generarUsuario = () =>{
         productos: generarProductos(10)
     }
 }
-
-const generarProductos = (cant) => {
-    const products = [];
-    for(let i=0; i<cant; i++){
-        products.push(generarProducto())
-    }
-}
-
-const generarProducto = () =>{
-    return{
-        id: faker.database.mongodbObjectId(),
-        name: faker.commerce.productName(),
-        description: faker.commerce.productDescription(),
-        price: faker.commerce.price()
-    }
-}
-
-export {generarUsuarios, generarProductos}
+ */
