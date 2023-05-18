@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const userRouter = Router();
 const passport = require("passport");
-const {postUserLogin, getRegister, getUser, getUserRegister, test, sessionLogout} = require("../controllers/sessionsController.js")
+const {postUserLogin, getRegister, getUser, getUserRegister, test, sessionLogout} = require("../controllers/sessionController.js")
 
 userRouter.get("/login", getUser);
 userRouter.post("/login", postUserLogin);
 userRouter.get("/register", getRegister);
 userRouter.post("/register", getUserRegister);
-userRouter.get("/logout", logoutUser);
+userRouter.get("/logout", sessionLogout);
 userRouter.get(
     "/auth/github",
     passport.authenticate("github", { scope: ["user:email"] })

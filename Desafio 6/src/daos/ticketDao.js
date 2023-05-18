@@ -1,6 +1,7 @@
 const ticket = require('../models/ticket')
 const mongoose = require("mongoose");
-const MONGODB = process.env.MONGODB_URL;
+const { MONGODB } = require('../config/config')
+
 mongoose.connect(MONGODB, error => {
     if (error) {
         console.log('Cannot connect to db')

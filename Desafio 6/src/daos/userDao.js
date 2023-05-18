@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const userModel = require('../models/user')
 const userDto = require('./DTO/userDTO');
+const { MONGODB } = require('../config/config')
 const convertToDto = (object) => {
     const { _id, user, email,password,rol,cartId } = object;
     let aux = new userDto(_id, user, email,password, rol,cartId);
     return aux
 }
-const MONGODB = process.env.MONGODB_URL;
+
 mongoose.connect(MONGODB, error => {
     if (error) {
         console.log('Cannot connect to db')

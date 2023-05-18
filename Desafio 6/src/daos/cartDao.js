@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const CartModel = require('../model/cart')
+const CartModel = require('../models/cart')
 const CartDto = require('./DTO/cartDTO')
+const { MONGODB } = require('../config/config')
 
-const MONGODB = process.env.MONGODB
 mongoose.connect(MONGODB, error => {
     if (error) {
         console.log('Cannot connect to db')

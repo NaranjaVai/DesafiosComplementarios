@@ -6,9 +6,6 @@ import { generarProductos } from "../mocks/index";
 const productRouter = Router()
 const products = []
 
-
-
-
 productRouter.get('/mockingProducts', (req,res) =>{
     res.send({status: 'success', payload: products})
 })
@@ -29,8 +26,6 @@ productRouter.post('/mockingProducts', (req,res) =>{
     
     res.send({status: 'success', payload: products})
 })
-
-
 
 export default productRouter;
 

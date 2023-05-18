@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const productModel = require('../models/product')
 const productDTO = require('./DTO/productDTO');
+const { MONGODB } = require('../config/config')
 
-const MONGODB = process.env.MONGODB_URL
+
 mongoose.connect(MONGODB, error => {
     if (error) {
         console.log('Connection error')

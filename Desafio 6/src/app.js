@@ -5,12 +5,15 @@ const exphbs = require('express-handlebars');
 const passport = require('passport');
 const {Server} = require('socket.io');
 const MongoStore = require('connect-mongo');
+const {PORT , MONGODB , SECRETSESSION} = require('./config/config')
 const { initializePassport } = require("./config/passport.config");
+const {addLogger} = require('./utils/logger')
 const app = express();
 const userRouter = require('./routes/userRouter');
 const productRouter = require('./routes/productRouter');
 const cartRouter = require('./routes/cartRouter');
-const messageRouter = require('./routes/messageRouter')
+const messageRouter = require('./routes/messageRouter');
+const testRouter = require('./routes/testRouter');
 
 app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'main.hbs'}))
 app.set('view engine', 'hbs');
@@ -18,18 +21,19 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use('/recursos', express.static(__dirname + '/public'));
+app.use(addLogger);
 
-const MONGODB = process.env.MONGODB_URL;
+//const MONGODB = process.env.MONGODB_URI;
 const mongoStore = MongoStore.create({
     mongoUrl: MONGODB,
-    mongoOptions:{useNewUrlParser:true, useUnifiedTopology: true} ,
+    mongoOptions:{useNewUrlParser:true, useUnifiedTopology: true},
     ttl: 400
 })
 
-const sessionPw = process.env.SECRET_SESSION;
+//const sessionPw = process.env.SECRET_SESSION;
 app.use(session({
     store: mongoStore,
-    secret: sessionPw,
+    secret: SECRETSESSION,
     resave:false,
     saveUninitializSed: false
 }))
@@ -38,14 +42,14 @@ app.use('/api/session', userRouter);
 app.use('/api/products', productRouter); 
 app.use('/api/carts', cartRouter);  
 app.use("/api/messages", messageRouter);
-
+app.use("/api/Tests", testRouter);
 
 
 initializePassport();
 app.use(passport.initialize());
 
 
-const PORT = process.env.PORT || 8080 ;
+//const PORT = process.env.PORT || 8080 ;
 const server = app.listen(PORT , ()=>{
     console.log(`Server running on port: ${server.address().port}`)
 }); 
