@@ -15,13 +15,14 @@
     "nodemon": "^2.0.21",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
-    "socket.io": "^4.6.1",
     "session-file-store": "^1.5.0",
+    "socket.io": "^4.6.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
   },
   "main": "app.js",
-  
   "scripts": {
     "dev": "nodemon src/app.js",
     "start": "node src/app.js"

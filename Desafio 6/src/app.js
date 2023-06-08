@@ -4,6 +4,9 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const passport = require('passport');
 const {Server} = require('socket.io');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUIExpress = require('swagger-ui-express');
+const {swaggerOptions} = require('./swaggerOptions')
 const MongoStore = require('connect-mongo');
 const {PORT , MONGODB , SECRETSESSION} = require('./config/config')
 const { initializePassport } = require("./config/passport.config");
@@ -22,6 +25,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use('/recursos', express.static(__dirname + '/public'));
 app.use(addLogger);
+
+const specs = swaggerJsDoc(swaggerOptions);
+app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 
 //const MONGODB = process.env.MONGODB_URI;
 const mongoStore = MongoStore.create({
