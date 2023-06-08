@@ -23,9 +23,24 @@ paths:
         "404":
           description: Carrito no encontrado
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
 
   /api/cart/:
+    get:
+      summary: Obtiene el carrito
+      tags:
+        - Cart
+       responses:
+        "200":
+          description: Se obtuvo el carrito correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error del servidor
     post:
       summary: Crea un carrito
       tags:
@@ -38,7 +53,7 @@ paths:
               schema:
                 $ref: "#components/schemas/EmptyCart"
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
 
   /api/cart/{cid}:
     get:
@@ -65,27 +80,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/Cart"
         "404":
-          description: No existe el cart con el id e47869135db72f1976d172c
+          description: No existe el cart con ese ID
         "500":
           description: Error de servidor
-    delete:
-      summary: Elimina todos los productos del carrito
-      tags:
-        - Cart
-      parameters:
-        - in: path
-          name: cid
-          required: true
-          schema:
-            type: string
-          description: ID del carrito
-      responses:
-        "200":
-          description: Los productos del carrito con id  e47869135db72f1976d172c han sido eliminados correctamente
-        "404": 
-          description: No existe el cart con el id e47869135db72f1976d172c
-        "500": 
-          description: Id inválido.
 
   /api/cart/{cid}/product/{pid}:
     post:
@@ -107,55 +104,11 @@ paths:
           description: ID del producto a agregar
       responses:
         "201":
-          description: Producto agregado all carrito
+          description: Producto agregado al carrito
         "404":
           description: Carrito o producto no encontrado
         "500":
-          description: Error de servidor
-    put:
-      summary: Actualiza la cantidad de un producto en el carrito
-      tags:
-        - Cart
-      parameters:
-        - in: path
-          name: cid
-          required: true
-          schema:
-            type: string
-          description: ID del carrito
-        - in: path
-          name: pid
-          required: true
-          schema:
-            type: string
-          description: ID del producto a actualizar
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                quantity:
-                  type: number
-                  description: Nueva cantidad del producto
-      responses:
-        "200":
-          description: Cantidad de producto actualizada exitosamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  products:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/CartQuantity"
-        "404":
-          description: Carrito o producto no encontrado
-        "500":
-          description: Error de servidor
-    
+          description: Error de servidor    
     delete:
       summary: Elimina un producto del carrito
       tags:
@@ -230,7 +183,7 @@ paths:
         "404":
           description: Carrito no encontrado
         "409":
-          description: No hay suficiente stock de Remera Ojos para completar la compra, el mismo cuenta con 0 de stock
+          description: No hay stock del producto para completar la compra
         "500":
           description: Error de servidor
 components:

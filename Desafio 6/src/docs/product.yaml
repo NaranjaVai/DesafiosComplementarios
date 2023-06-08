@@ -6,7 +6,7 @@ paths:
         - Products
       responses:
         "200":
-          description: Los productos fueron obtenido correctamente
+          description: Los productos se obtenieron correctamente
           content:
             application/json:
               schema:
@@ -14,17 +14,17 @@ paths:
                 items:
                   $ref: "#components/schemas/Product"
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
   /api/products/{pid}:
     get:
-      summary: Obtiene un producto a partir de su id
+      summary: Obtiene un producto por su id
       tags: 
         - Products
       parameters:
       - name: pid
         in: path
         required: true
-        description: id del producto que se desea solicitar.
+        description: id del producto que se solicita.
         schema:
           $type: String
       responses: 
@@ -35,17 +35,16 @@ paths:
               schema:
                 $ref: "#components/schemas/Product"
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
     put:
-      summary: Modifica un producto a partir de su id
+      summary: Modifica un producto por su id
       tags: 
         - Products
       parameters:
       - name: pid
         in: path
         required: true
-        description: id del usuario que se desea solicitar.
-        schema:
+        description: id del usuario que se solicita
           $type: String
       requestBody:
         required: true
@@ -55,14 +54,14 @@ paths:
               $ref: "#components/requestBodies/NewOrUpdateRequestBody"
       responses:
         "201":
-          description: Producto creado exitosamente
+          description: Producto creado exitosamente!
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
         "500":
-          description: Error interno del servidor  
-  /api/products/form:
+          description: Error del servidor  
+  /api/products/register:
     post:
       summary: Crea un nuevo producto
       tags: 
@@ -81,24 +80,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/Product"
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
   /api/products/form/{pid}:
     delete:
-      summary: Elimina un producto a partir de su id
+      summary: Elimina un producto por su id
       tags: 
         - Products
       parameters:
       - name: pid
         in: path
         required: true
-        description: id del producto que se desea solicitar.
+        description: id del producto que se solicita
         schema:
           $type: String
       responses: 
         "200":
           description: "Producto Eliminado"
         "500":
-          description: Error interno del servidor
+          description: Error del servidor
 components:
   schemas:
     Product:
@@ -113,15 +112,9 @@ components:
         description:
           type: String
           description: Descripción del producto
-        code:
-          type: String 
-          description: Código del Producto
         price: 
           type: Number
           description: Precio del Producto
-        status:
-          type: Boolean
-          description: Estado del producto(con o sin stock)
         stock: 
           type: Number 
           desciption: Stock del producto
@@ -131,20 +124,15 @@ components:
         thumbnail:
           type: String 
           description: Url de la imagen del producto
-        owner: 
-          type: string 
-          description: Creador del producto, por defecto es admin.
       example:
         _id: Object("63fd1917e187ee54ba617cbe")
-        title: "Remera Rocket"
-        description: Remera de algodon peinado
-        code: ASASAD
-        price: 5000
-        status: true
-        stock: 5
-        category: Super
-        thumbnail: https://res.cloudinary.com/dveku4pvl/image/upload/v1660416669/remera-r…
-        owner: "user@gmail.com"
+        title: "Pelota de Baloncesto"
+        description: Pelota de baloncesto clasica estandar
+        code: 3324B
+        price: 10000
+        stock: 8
+        category: Deportes
+        thumbnail: "https://cdn.pixabay.com/photo/2020/03/10/16/47/moon-4919501_1280.jpg"
   requestBodies:
     NewOrUpdateRequestBody:
       type: object
@@ -161,9 +149,6 @@ components:
         price:
           type: number
           description: Precio del Producto
-        status:
-          type: boolean
-          description: Estado del producto (con o sin stock)
         stock:
           type: number
           description: Stock del producto
@@ -173,16 +158,11 @@ components:
         thumbnail:
           type: string
           description: URL de la imagen del producto
-        owner: 
-          type: string 
-          description: Creador del producto, por defecto es admin.
       example:
-        title: "Remera Rocket"
-        description: "Remera de algodón peinado"
-        code: "ASASAD"
-        price: 5000
-        status: true
-        stock: 5
-        category: "Super"
-        thumbnail: "https://res.cloudinary.com/dveku4pvl/image/upload/v1660416669/remera-r…"
-        owner: "user@gmail.com"
+        title: "Tabla de Surf"
+        description: "Tabla de surf de dos colores"
+        code: "55283A"
+        price: 4000
+        stock: 15
+        category: "Deportes"
+        thumbnail: "https://cdn.pixabay.com/photo/2016/11/19/10/30/beach-1838501_1280.jpg"
